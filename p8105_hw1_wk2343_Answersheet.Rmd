@@ -154,6 +154,7 @@ Secondly, I'll move on to numeric categories.
 ggplot(p2_df, aes(x = x, y = y, col = numericVec) ) + geom_point()
 
 ```
+
 The two-color seperation remains the same as the previous plot, but the scaling for numeric factor is on gradiant colors.
 
 Lastly, the factors.
@@ -163,4 +164,5 @@ Lastly, the factors.
 ggplot(p2_df, aes(x = x, y = y, col = factorVec) ) + geom_point()
 
 ```
+
 The result is literally the same as first plot, the only difference is that right now, the x + y > 1 condition is factorized as "TRUE" or "FALSE".
