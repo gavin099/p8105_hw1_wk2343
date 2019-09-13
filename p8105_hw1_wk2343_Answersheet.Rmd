@@ -1,0 +1,166 @@
+---
+title: "Homework 01"
+author: "Gavin Ko wk2343"
+date: "2019/9/13"
+output: github_document
+---
+
+# Problem 1
+
+## 0. Library
+```{r library}
+
+library(tidyverse)
+library(knitr)
+
+```
+
+## 1. Creating data frame
+
+To create the data frame requested, I would like to set "HelloWorld" as  a great start.
+Unfortunately, that's gonna make the length 10, rather than desired 8, so that's why I put it in this format. For factors, I simply put 1,2,3 as my categories.
+
+```{r create_data}
+
+p1_df = tibble(
+  randomsample = rnorm(8),
+  logical = randomsample > 0,
+  character = "HelloWor",
+  factor = factor( c(1,1,2,2,3,3,3,3) )
+)
+
+```
+## 2. Calculating means
+
+```{r counting_means}
+
+#for random sample itself
+mean( pull(p1_df, randomsample) )
+#for logical vector
+mean( pull(p1_df, logical) )
+#for character vector length 8
+mean( pull(p1_df, character) )
+#for factor vector length 8
+mean( pull(p1_df, factor) )
+
+```
+It turns out that only numerical and logical data works in mean calculation. 
+
+## 3. As.numeric transformation
+```{r data_asnumeric, results = "hide"}
+
+#logical vector
+mean( as.numeric( pull(p1_df, logical) ) )
+#character vector
+mean( as.numeric( pull(p1_df, character) ) )
+#factor vector
+mean( as.numeric( pull(p1_df, factor) ) )
+
+```
+Mean function is built for arithmetic operations, so typically the iuput data should be numeric. Logical vectors also works cause it automatically assign 1 to TRUE and 0 to FALSE.
+
+After numeric transformation, the result of logical vector remains the same, indicationg the fraction of "TRUE" out of all items in it. 
+
+The result of character vector is still NA, since there's no way to set characters as digits.
+
+The result of factor vector is done by transforming all categories indicator into numbers. Therefore, we're actually calculating the mean of two 1s, two 2s and four 3s.
+
+## 4. Data class transformation
+For this part, I merge two requested process together in one line of code. random sample are all put in the front just for tidyness.
+
+```{r data_transformation_numeric}
+
+#converting logical to numeric
+p1_df_convert_numeric = pull(p1_df, randomsample) * as.numeric( pull(p1_df, logical) )
+p1_df_convert_numeric
+
+```
+
+After numeric transformation, the logical vector is transformed to either 1 or 0. While those >0 elements in random sample stays the same, those elements with value <= 0 will became 0 after multiplication. 
+
+```{r data_transformation_factor}
+
+#converting logical to factor
+p1_df_convert_factor = pull(p1_df, randomsample) * factor( pull(p1_df, logical) )
+p1_df_convert_factor
+
+```
+
+As shown above, it's not meaningful to multiply numbers to a factor vector. This leads 
+to a NA result.
+
+```{r data_transformation_factor_numeric}
+
+#converting logical to factor, then convert it to numeric
+p1_df_convert_numericandfactor = pull(p1_df, randomsample) * as.numeric( factor( pull(p1_df, logical) ) )
+p1_df_convert_numericandfactor
+
+```
+
+The pattern of this transformation follows the rule below:
+
+Step1. logical to factor, devided into two categories "True" and "False", rather than boolean True and False.
+
+Step2. factor to numeric, while "False" would be assigned with value 1, "True" would be assigned with value 2.
+
+Under this pattern, the elements > 0 will be multiplied by two after multiplication, while those <= 0 holds the same value as it was.
+
+
+
+# Problem 2
+## 1. Creating data frame
+
+```{r create_data_p2}
+
+p2_df = tibble(
+  x = rnorm(500),
+  y = rnorm(500),
+  logicalVec = x + y > 1,
+  numericVec = as.numeric(logicalVec),
+  factorVec = as.factor(logicalVec)
+)
+
+```
+
+The size of the dataset is `r ncol(p2_df)` columns and `r nrow(p2_df)` rows.
+The mean of x is `r mean( pull(p2_df, x) )`.
+The median of x is `r median( pull(p2_df, x) ) `.
+The standard deveation of x is `r sd( pull(p2_df, x) )`. 
+The proportion of cases for which x + y > 1 is `r mean( pull(p2_df, numericVec) )`
+
+## 2. Scatterplots
+
+First of all, I'll do the one with logical variables, and save the consequence to repository.
+
+```{r scatterplot 1}
+#scatter plot with logical vector
+ggplot(p2_df, aes(x = x, y = y, col = logicalVec) ) + geom_point()
+
+```
+
+In this plot, we can see that the different colors are seperated by the straightline: 
+x + y = 1, while those falls below indicates x + y <= 1, which correspond to their logic status.
+
+```{r saving_plot}
+#saving plots
+ggsave("p2_df_scatterplot_logical.png")
+
+```
+
+Secondly, I'll move on to numeric categories.
+
+```{r scatterplot 2}
+#scatter plot with numeric vector
+ggplot(p2_df, aes(x = x, y = y, col = numericVec) ) + geom_point()
+
+```
+The two-color seperation remains the same as the previous plot, but the scaling for numeric factor is on gradiant colors.
+
+Lastly, the factors.
+
+```{r scatterplot 3}
+#scatter plot with factor vector
+ggplot(p2_df, aes(x = x, y = y, col = factorVec) ) + geom_point()
+
+```
+The result is literally the same as first plot, the only difference is that right now, the x + y > 1 condition is factorized as "TRUE" or "FALSE".
