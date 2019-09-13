@@ -49,14 +49,14 @@ p1_df = tibble(
 mean( pull(p1_df, randomsample) )
 ```
 
-    ## [1] -0.1794945
+    ## [1] -0.00113089
 
 ``` r
 #for logical vector
 mean( pull(p1_df, logical) )
 ```
 
-    ## [1] 0.375
+    ## [1] 0.5
 
 ``` r
 #for character vector length 8
@@ -123,8 +123,8 @@ p1_df_convert_numeric = pull(p1_df, randomsample) * as.numeric( pull(p1_df, logi
 p1_df_convert_numeric
 ```
 
-    ## [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.6095728 1.0936857
-    ## [8] 1.2132050
+    ## [1] 0.74210171 0.00000000 0.09161472 0.00000000 0.04478227 0.00000000
+    ## [7] 0.90674281 0.00000000
 
 After numeric transformation, the logical vector is transformed to
 either 1 or 0. While those \>0 elements in random sample stays the same,
@@ -153,8 +153,8 @@ p1_df_convert_numericandfactor = pull(p1_df, randomsample) * as.numeric( factor(
 p1_df_convert_numericandfactor
 ```
 
-    ## [1] -1.1274152 -0.8702916 -1.0928574 -0.7301297 -0.5317258  1.2191456
-    ## [7]  2.1873714  2.4264100
+    ## [1]  1.48420342 -0.04418685  0.18322945 -1.30998965  0.08956453 -0.37115233
+    ## [7]  1.81348561 -0.06895979
 
 The pattern of this transformation follows the rule below:
 
@@ -182,8 +182,8 @@ p2_df = tibble(
 ```
 
 The size of the dataset is 5 columns and 500 rows. The mean of x is
-0.0264657. The median of x is -0.020922. The standard deveation of x is
-0.9807539. The proportion of cases for which x + y \> 1 is 0.256
+-0.0401168. The median of x is -0.0693272. The standard deveation of x
+is 0.9622233. The proportion of cases for which x + y \> 1 is 0.218
 
 ## 2\. Scatterplots
 
@@ -216,6 +216,7 @@ ggplot(p2_df, aes(x = x, y = y, col = numericVec) ) + geom_point()
 ```
 
 ![](p8105_hw1_wk2343_Answersheet_files/figure-gfm/scatterplot%202-1.png)<!-- -->
+
 The two-color seperation remains the same as the previous plot, but the
 scaling for numeric factor is on gradiant colors.
 
@@ -227,6 +228,7 @@ ggplot(p2_df, aes(x = x, y = y, col = factorVec) ) + geom_point()
 ```
 
 ![](p8105_hw1_wk2343_Answersheet_files/figure-gfm/scatterplot%203-1.png)<!-- -->
+
 The result is literally the same as first plot, the only difference is
 that right now, the x + y \> 1 condition is factorized as “TRUE” or
 “FALSE”.
