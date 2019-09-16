@@ -50,20 +50,20 @@ It turns out that only numerical and logical data works in mean calculation.
 ```{r data_asnumeric, results = "hide"}
 
 #logical vector
-mean( as.numeric( pull(p1_df, logical) ) )
+P1_logicaltonumeric = as.numeric( pull(p1_df, logical) ) 
 #character vector
-mean( as.numeric( pull(p1_df, character) ) )
+P1_charactertonumeric = as.numeric( pull(p1_df, character) ) 
 #factor vector
-mean( as.numeric( pull(p1_df, factor) ) )
+P1_factortonumeric = as.numeric( pull(p1_df, factor) )
 
 ```
 Mean function is built for arithmetic operations, so typically the iuput data should be numeric. Logical vectors also works cause it automatically assign 1 to TRUE and 0 to FALSE.
 
-After numeric transformation, the result of logical vector remains the same, indicationg the fraction of "TRUE" out of all items in it. 
+After numeric transformation, logical vector is transformed to 0 representing false, and 1 representing true.
 
-The result of character vector is still NA, since there's no way to set characters as digits.
+The result of character vector transformation is still NA, since there's no way to set characters as digits.
 
-The result of factor vector is done by transforming all categories indicator into numbers. Therefore, we're actually calculating the mean of two 1s, two 2s and four 3s.
+The result of factor vector is done by transforming all categories indicator into numbers. 
 
 ## 4. Data class transformation
 For this part, I merge two requested process together in one line of code. random sample are all put in the front just for tidyness.

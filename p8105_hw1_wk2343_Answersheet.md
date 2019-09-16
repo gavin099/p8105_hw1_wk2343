@@ -49,14 +49,14 @@ p1_df = tibble(
 mean( pull(p1_df, randomsample) )
 ```
 
-    ## [1] -0.2414571
+    ## [1] -0.7296151
 
 ``` r
 #for logical vector
 mean( pull(p1_df, logical) )
 ```
 
-    ## [1] 0.125
+    ## [1] 0.25
 
 ``` r
 #for character vector length 8
@@ -85,32 +85,30 @@ calculation.
 
 ``` r
 #logical vector
-mean( as.numeric( pull(p1_df, logical) ) )
+P1_logicaltonumeric = as.numeric( pull(p1_df, logical) ) 
 #character vector
-mean( as.numeric( pull(p1_df, character) ) )
+P1_charactertonumeric = as.numeric( pull(p1_df, character) ) 
 ```
 
-    ## Warning in mean(as.numeric(pull(p1_df, character))): NAs introduced by
-    ## coercion
+    ## Warning: NAs introduced by coercion
 
 ``` r
 #factor vector
-mean( as.numeric( pull(p1_df, factor) ) )
+P1_factortonumeric = as.numeric( pull(p1_df, factor) )
 ```
 
 Mean function is built for arithmetic operations, so typically the iuput
 data should be numeric. Logical vectors also works cause it
 automatically assign 1 to TRUE and 0 to FALSE.
 
-After numeric transformation, the result of logical vector remains the
-same, indicationg the fraction of “TRUE” out of all items in it.
+After numeric transformation, logical vector is transformed to 0
+representing false, and 1 representing true.
 
-The result of character vector is still NA, since there’s no way to set
-characters as digits.
+The result of character vector transformation is still NA, since there’s
+no way to set characters as digits.
 
 The result of factor vector is done by transforming all categories
-indicator into numbers. Therefore, we’re actually calculating the mean
-of two 1s, two 2s and four 3s.
+indicator into numbers.
 
 ## 4\. Data class transformation
 
@@ -123,7 +121,8 @@ p1_df_convert_numeric = pull(p1_df, randomsample) * as.numeric( pull(p1_df, logi
 p1_df_convert_numeric
 ```
 
-    ## [1] 0.000000 0.000000 0.000000 1.127198 0.000000 0.000000 0.000000 0.000000
+    ## [1] 0.0000000 0.0000000 0.2620240 0.0000000 0.0000000 0.0000000 0.6426566
+    ## [8] 0.0000000
 
 After numeric transformation, the logical vector is transformed to
 either 1 or 0. While those \>0 elements in random sample stays the same,
@@ -152,8 +151,8 @@ p1_df_convert_numericandfactor = pull(p1_df, randomsample) * as.numeric( factor(
 p1_df_convert_numericandfactor
 ```
 
-    ## [1] -0.05879077 -0.20837536 -0.01585912  2.25439609 -0.37243412 -1.51311059
-    ## [7] -0.32011163 -0.57017328
+    ## [1] -2.67484185 -0.64082451  0.52404799 -1.00515052 -0.46826577 -0.04366341
+    ## [7]  1.28531316 -1.90885538
 
 The pattern of this transformation follows the rule below:
 
@@ -181,8 +180,8 @@ p2_df = tibble(
 ```
 
 The size of the dataset is 5 columns and 500 rows. The mean of x is
--0.0650513. The median of x is -0.0440876. The standard deveation of x
-is 1.0298612. The proportion of cases for which x + y \> 1 is 0.224
+0.0202548. The median of x is 0.0345319. The standard deveation of x is
+0.9935055. The proportion of cases for which x + y \> 1 is 0.242
 
 ## 2\. Scatterplots
 
