@@ -11,14 +11,14 @@ Gavin Ko wk2343
 library(tidyverse)
 ```
 
-    ## -- Attaching packages -------------------------------------------------- tidyverse 1.2.1 --
+    ## -- Attaching packages ------------------------------------------------------------ tidyverse 1.2.1 --
 
     ## v ggplot2 3.2.1     v purrr   0.3.2
     ## v tibble  2.1.3     v dplyr   0.8.3
     ## v tidyr   0.8.3     v stringr 1.4.0
     ## v readr   1.3.1     v forcats 0.4.0
 
-    ## -- Conflicts ----------------------------------------------------- tidyverse_conflicts() --
+    ## -- Conflicts --------------------------------------------------------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
@@ -37,7 +37,7 @@ simply put 1,2,3 as my categories.
 p1_df = tibble(
   randomsample = rnorm(8),
   logical = randomsample > 0,
-  character = "HelloWor",
+  character = c("H","E","L","L","W","O","R","D"),
   factor = factor( c(1,1,2,2,3,3,3,3) )
 )
 ```
@@ -49,14 +49,14 @@ p1_df = tibble(
 mean( pull(p1_df, randomsample) )
 ```
 
-    ## [1] -0.00113089
+    ## [1] -0.2414571
 
 ``` r
 #for logical vector
 mean( pull(p1_df, logical) )
 ```
 
-    ## [1] 0.5
+    ## [1] 0.125
 
 ``` r
 #for character vector length 8
@@ -123,8 +123,7 @@ p1_df_convert_numeric = pull(p1_df, randomsample) * as.numeric( pull(p1_df, logi
 p1_df_convert_numeric
 ```
 
-    ## [1] 0.74210171 0.00000000 0.09161472 0.00000000 0.04478227 0.00000000
-    ## [7] 0.90674281 0.00000000
+    ## [1] 0.000000 0.000000 0.000000 1.127198 0.000000 0.000000 0.000000 0.000000
 
 After numeric transformation, the logical vector is transformed to
 either 1 or 0. While those \>0 elements in random sample stays the same,
@@ -153,8 +152,8 @@ p1_df_convert_numericandfactor = pull(p1_df, randomsample) * as.numeric( factor(
 p1_df_convert_numericandfactor
 ```
 
-    ## [1]  1.48420342 -0.04418685  0.18322945 -1.30998965  0.08956453 -0.37115233
-    ## [7]  1.81348561 -0.06895979
+    ## [1] -0.05879077 -0.20837536 -0.01585912  2.25439609 -0.37243412 -1.51311059
+    ## [7] -0.32011163 -0.57017328
 
 The pattern of this transformation follows the rule below:
 
@@ -182,8 +181,8 @@ p2_df = tibble(
 ```
 
 The size of the dataset is 5 columns and 500 rows. The mean of x is
--0.0401168. The median of x is -0.0693272. The standard deveation of x
-is 0.9622233. The proportion of cases for which x + y \> 1 is 0.218
+-0.0650513. The median of x is -0.0440876. The standard deveation of x
+is 1.0298612. The proportion of cases for which x + y \> 1 is 0.224
 
 ## 2\. Scatterplots
 

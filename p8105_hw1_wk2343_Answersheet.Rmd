@@ -25,7 +25,7 @@ Unfortunately, that's gonna make the length 10, rather than desired 8, so that's
 p1_df = tibble(
   randomsample = rnorm(8),
   logical = randomsample > 0,
-  character = "HelloWor",
+  character = c("H","E","L","L","W","O","R","D"),
   factor = factor( c(1,1,2,2,3,3,3,3) )
 )
 
